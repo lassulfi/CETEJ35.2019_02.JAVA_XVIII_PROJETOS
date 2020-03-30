@@ -38,30 +38,16 @@
                    </tr>
                </thead>
                <tbody>
-                   <tr>
-                       <td>Brasil</td>
-                       <td>BR</td>
-                       <td>
-                           <button type="button" class="btn btn-warning">Editar</button>
-                           <button type="button" class="btn btn-danger">Excluir</button>
-                       </td>
-                   </tr>
-                   <tr>
-                       <td>Argentina</td>
-                       <td>AR</td>
-                       <td>
-                            <button type="button" class="btn btn-warning">Editar</button>
-                            <button type="button" class="btn btn-danger">Excluir</button>
-                       </td>
-                   </tr>
-                   <tr>
-                       <td>Uruguai</td>
-                       <td>UR</td>
-                       <td>
-                            <button type="button" class="btn btn-warning">Editar</button>
-                            <button type="button" class="btn btn-danger">Excluir</button>
-                       </td>
-                   </tr>
+                    <#list listaPaises as pais>
+                        <tr>
+                            <td>${pais.nome}</td>
+                            <td>${pais.sigla}</td>
+                            <td>
+                                <button type="button" class="btn btn-warning">Editar</button>
+                                <button type="button" class="btn btn-danger">Excluir</button>
+                            </td>
+                        </tr>
+                    </#list>
                </tbody>
            </table>
        </div>
