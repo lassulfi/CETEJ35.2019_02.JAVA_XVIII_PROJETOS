@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.edu.utfpr.cp.java</groupId>
-	<artifactId>hello-world</artifactId>
+	<artifactId>cliente-pais-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>hello-world</name>
-	<description>CETEJ35 Hello World</description>
+	<name>cliente-pais-app</name>
+	<description>App para gerenciamento de países da disciplina CETEJ35</description>
 
 	<properties>
 		<java.version>11</java.version>
@@ -37,6 +37,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- DevTools -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
 		</dependency>
 
 		<dependency>

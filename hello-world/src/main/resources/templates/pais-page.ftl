@@ -16,16 +16,37 @@
            <p>Nesta página você pode listar, criar, alterar ou excluir países...</p>
        </div>
 
-       <form action="/hello/form" method="POST">
+        <#if paisAtual??>
+            <form action="/paises/alterar" method="POST">
+                <input type="hidden" name="id" value="${(paisAtual.id)!}" />
+        <#else/>
+            <form action="/paises/criar" method="POST">
+        </#if>
+
            <div class="form-group">
                <label for="nome">Nome:</label>
-               <input type="text" class="form-control" placeholder="Informe o nome do país" id="nome">
+               <input value="${(paisAtual.nome)!}" 
+                    type="text" 
+                    class="form-control" 
+                    placeholder="Informe o nome do país" 
+                    id="nome" 
+                    name="nome">
            </div>
            <div class="form-group">
                <label for="sigla">Sigla:</label>
-               <input type="text" class="form-control" placeholder="Informe a sigla do país" id="sigla">
+               <input value="${(paisAtual.sigla)!}" 
+                    type="text" 
+                    class="form-control" 
+                    placeholder="Informe a sigla do país" 
+                    id="sigla" 
+                    name="sigla">
            </div>
-           <input type="submit" class="btn btn-primary" value="Cadastrar" />
+
+           <#if paisAtual??>
+                <input type="submit" class="btn btn-warning" value="Alterar" />
+            <#else/>
+                <input type="submit" class="btn btn-primary" value="Cadastrar" />
+           </#if>
        </form>
 
        <div class="mt-5">
@@ -43,8 +64,8 @@
                             <td>${pais.nome}</td>
                             <td>${pais.sigla}</td>
                             <td>
-                                <button type="button" class="btn btn-warning">Editar</button>
-                                <button type="button" class="btn btn-danger">Excluir</button>
+                                <a href="/paises/preparaAlterar?id=${pais.id}" class="btn btn-warning">Editar</a>
+                                <a href="paises/apagar?id=${pais.id}" class="btn btn-danger">Excluir</a>
                             </td>
                         </tr>
                     </#list>
