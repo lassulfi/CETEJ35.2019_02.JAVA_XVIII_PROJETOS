@@ -4,13 +4,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import lombok.extern.java.Log;
+
 @Controller
+@Log
 public class PaisController {
 
     private List<PaisModel> paises;
@@ -24,7 +30,7 @@ public class PaisController {
 
     @GetMapping("/paises")
     public String listarPaises(Model memoria) {
-        memoria.addAttribute("listaPaises", this.paises);
+        this.adicionaListaDePaisesNaMemoria(memoria);
 
         return "pais-page";
     }
@@ -37,7 +43,22 @@ public class PaisController {
     }
 
     @PostMapping("/paises/criar")
-    public String criar(PaisModel pais) {
+    public String criar(@Valid PaisModel pais, BindingResult result, Model memoria) {
+        if(result.hasErrors()) {
+            result.getFieldErrors()
+                .forEach(err -> {
+                    log.info(err.getField() + " - " +  
+                        err.getDefaultMessage()
+                    );
+                    memoria.addAttribute(err.getField(), err.getDefaultMessage());
+                });
+            
+            this.adicionaListaDePaisesNaMemoria(memoria);
+            this.adicionaPaisNaMemoria(memoria, pais);
+
+            return "pais-page";
+        }
+        
         Long id = Long.valueOf(paises.size() + 1);
         pais.setId(id);
         paises.add(pais);
@@ -52,8 +73,9 @@ public class PaisController {
             .findAny()
             .get();
         
-        memoria.addAttribute("paisAtual", pais);
-        memoria.addAttribute("listaPaises", this.paises);
+        this.adicionaListaDePaisesNaMemoria(memoria);
+        this.adicionaPaisNaMemoria(memoria, pais);
+        memoria.addAttribute("alterar", true);
 
         return "pais-page";
     }
@@ -66,5 +88,13 @@ public class PaisController {
         pais.setSigla(paisNovo.getSigla());
 
         return "redirect:/paises";
+    }
+
+    private void adicionaListaDePaisesNaMemoria(Model memoria) {
+        memoria.addAttribute("listaPaises", this.paises);
+    }
+
+    private void adicionaPaisNaMemoria(Model memoria, PaisModel pais) {
+        memoria.addAttribute("paisAtual", pais);
     }
 }
