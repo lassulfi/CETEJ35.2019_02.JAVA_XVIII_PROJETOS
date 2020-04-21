@@ -60,6 +60,12 @@
                 <input type="submit" class="btn btn-primary" value="Cadastrar" />
            </#if>
        </form>
+        <#if cadastrarPais??>
+            <div class="mt-1 alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Erro!</strong> ${cadastrarPais}
+            </div>
+        </#if>
 
        <div class="mt-5">
            <table class="table table-striped">
