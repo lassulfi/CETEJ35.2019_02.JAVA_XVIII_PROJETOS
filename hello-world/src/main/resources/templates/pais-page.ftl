@@ -12,8 +12,9 @@
 <body>
     <div class="container-fuild">
        <div class="jumbotron">
-           <h1>Gerencimento de Países</h1>
-           <p>Nesta página você pode listar, criar, alterar ou excluir países...</p>
+            <a href="/logout" class="float-right btn btn-primary">Sair da Aplicação</a>
+            <h1>Gerencimento de Países</h1>
+            <p>Nesta página você pode listar, criar, alterar ou excluir países...</p>
        </div>
 
         <#if alterar??>
