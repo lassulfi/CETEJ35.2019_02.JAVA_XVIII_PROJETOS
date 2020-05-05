@@ -7,5 +7,7 @@
 </head>
 <body>
     <h1>Esta página é acessível apenas para usuários com a <i>role</i> user.</h1>
+    <#-- <h1>Olá <strong>${usuario}</strong>!</h1> -->
+    <h1>Os papéis do usuário atual são <strong>${roles}</strong></h1>
 </body>
 </html>

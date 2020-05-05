@@ -5,11 +5,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import br.edu.utfpr.cp.java.entity.UsuarioPrincipal;
 
 @SpringBootApplication
 @EnableWebSecurity
@@ -55,4 +60,12 @@ public class ClientePaisApp extends WebSecurityConfigurerAdapter {
 	// 	System.out.println(new BCryptPasswordEncoder().encode("doe"));
 	// 	System.out.println(new BCryptPasswordEncoder().encode("doedoe"));
 	// }
+
+	@EventListener(InteractiveAuthenticationSuccessEvent.class)
+	public void salvarUsuarioNaMemoria(InteractiveAuthenticationSuccessEvent event) {
+		var usuario = (UsuarioPrincipal) event.getAuthentication().getPrincipal();
+
+		var request = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		request.getRequest().getSession().setAttribute("usuarioAtual", usuario);
+	}
 }
